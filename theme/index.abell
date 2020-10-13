@@ -1,0 +1,32 @@
+{{
+  const { globalMeta, importContent, $root } = Abell;
+
+  const Navbar = require('./components/Navbar.abell');
+  const Home = require('./components/Home.abell');
+  const AirQuality = require('./components/AirQuality.abell');
+  const About = require('./components/About.abell');
+  const Footer = require('./components/Footer.abell');
+}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio Starter for Abell. This starter includes projects, and about section."/>
+
+  <link rel="icon" href="{{ $root }}/static-assets/icons/favicon.ico"/>
+  <link rel="stylesheet" href="{{ $root }}/static-assets/styles/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&Roboto&xdisplay=swap" rel="stylesheet"> 
+  
+  <title>No Earth B</title>
+</head>
+<body>
+  <Navbar />
+  <main>
+    <Home props={$root} />
+    <AirQuality />
+    <About props={importContent} />
+  </main>
+  <Footer/>
+</body>
+</html>

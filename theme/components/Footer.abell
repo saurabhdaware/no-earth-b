@@ -1,0 +1,22 @@
+<AbellComponent>
+<template>
+  <footer>
+    &#169; <a href="https://saurabhdaware.in">saurabhdaware.in</a> <span id="footer-year"></span>
+  </footer>
+</template>
+<style>
+  footer {
+    padding: 30px 200px;
+    text-align: right;
+  }
+
+  @media (max-width: 768px) {
+    footer {
+      padding: 30px 20px;
+    }
+  }
+</style>
+<script inlined>
+  document.querySelector('#footer-year').innerText = new Date().getFullYear();
+</script>
+</AbellComponent>

@@ -1,0 +1,79 @@
+<AbellComponent>
+{{ const { $root } = props }}
+<template> 
+  <section id="home">
+    <div class="home-info-container">
+      <div class="font-secondary headline">
+        <p id="remaining-days"></p>
+        <a style="display: block; padding: 20px 7px;" href="#about">Read More &#8594;</a>
+      </div>
+      <div class="cover-image"><img class="cover-world-is-mine" src="{{ $root }}/static-assets/images/under-the-tree.svg"/></div>
+    </div>
+  </section>  
+</template>
+
+<script>
+  function setRemainingDays() {
+    const countDownDate = new Date("Jan 1, 2030 00:00:00").getTime();
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    document.querySelector("#remaining-days").innerHTML = `We have <b>${days}</b> days left to save our planet`;
+  }
+
+  setRemainingDays();
+</script>
+
+<!-- 'inlined' attribute adds CSS to <head> tag of the main page. -->
+<style inlined>
+  #map {
+    height: 400px;  /* The height is 400 pixels */
+    width: 100%;  /* The width is the width of the web page */
+  }
+  
+  section#home {
+    padding: 0px 0px;
+    color: #111;
+    height: 70vh;
+  }
+
+  section .home-info-container {
+    display: block;
+    padding: 80px 180px;
+    display: flex;
+    color: #333;
+  }
+
+  .headline {
+    padding-right: 20px;
+  }
+
+  section #remaining-days {
+    font-size: 3em;
+    flex: 2;
+    margin: 0px 0px;
+  }
+
+  .cover-image {
+    flex: 1;
+  }
+  img.cover-world-is-mine {
+    width: 300px;
+  }
+
+  @media (max-width: 768px) {
+    section {
+      padding: 30px;
+    }
+    section h1 {
+      font-size: 3rem;
+      line-height: 1.1;
+    }
+
+    section #remaining-days {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+</AbellComponent>

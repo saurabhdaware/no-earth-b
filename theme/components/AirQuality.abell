@@ -1,0 +1,128 @@
+<AbellComponent>
+{{ 
+  const process = require('process');
+  require('dotenv').config()
+  
+  const paramInfo = require('../data/aqi-params.json');
+}}
+<template>
+  <section class="container" id="air-quality">
+    <h2>Air Quality Index</h2>
+    <div class="aqi-card">
+      <div class="city-information">
+        <div class="city-name">----</div>
+        <div class="air-quality-detailed-numbers">
+          <table id="aqi-table">
+          </table>
+        </div>
+      </div>
+      <div class="air-quality-number">
+        <span class="air-quality-value">00</span> AQI
+      </div>
+    </div>
+    <div>
+      <table id="aqi-params">
+      </table>
+    </div>
+  </section>
+</template>
+
+<script>
+const scopedSelector = (selector) => document.querySelector(`#air-quality ${selector}`);
+const paramInfo = {{ JSON.stringify(paramInfo) }}
+
+async function fetchPollutionParameters(location='here') {
+  const apiResponse = await fetch(`https://api.waqi.info/feed/${location}/?token={{ process.env.AQI_TOKEN }}`).then(res => res.json());
+  return apiResponse.data;
+}
+
+fetchPollutionParameters().then((res) => {
+  scopedSelector('.city-name').innerHTML = res.city.name;
+  scopedSelector('.air-quality-value').innerHTML = res.aqi;
+  const tableHeads = Object.keys(res.iaqi)
+    .map((key) => `<th>${key}</th>`).join('');
+  const tableData = Object.values(res.iaqi)
+    .map((valObj) => `<td>${Math.round(valObj.v * 1000) / 1000}</td>`).join('');
+  
+  scopedSelector('#aqi-table').innerHTML = 
+    `<tr>${tableHeads}</tr><tr>${tableData}</tr>`
+
+  scopedSelector('#aqi-params').innerHTML = Object.keys(res.iaqi).map(aqiParameter => {
+    
+    return `
+      <tr>
+        <td>${aqiParameter}</td>
+        <td>${
+          aqiParameter in paramInfo 
+          ? paramInfo[aqiParameter] 
+          : '- No Info Avaiable -'
+        }</td>
+      </tr>
+    `
+  }).join('')
+});
+</script>
+
+
+<style global>
+.aqi-card {
+  display: flex;
+  padding: 80px 0px;
+}
+
+.air-quality-number {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  color: #999;
+}
+
+.air-quality-value {
+  font-size: 5rem;
+  color: #222;
+  font-weight: bold;
+}
+
+.air-quality-detailed-numbers {
+  padding: 40px 0px;
+}
+
+.city-information {
+  flex: 2;
+}
+
+.city-name {
+  font-size: 2.3rem;
+  color: #333;
+}
+
+#aqi-table,
+#aqi-params {
+  padding: 10px;
+}
+
+table#aqi-table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+table#aqi-params {
+  font-size: 0.9rem;
+}
+
+table#aqi-table, table#aqi-table td, table#aqi-table th {
+  border: 1px solid #ddd;
+}
+
+table#aqi-table td, table#aqi-table th {
+  padding: 10px;
+}
+
+table#aqi-params td, table#aqi-params th {
+  padding: 10px 70px 10px 10px;
+}
+
+
+</style>
+
+</AbellComponent>

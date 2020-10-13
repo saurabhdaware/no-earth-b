@@ -1,0 +1,26 @@
+{
+  "name": "no-planet-b",
+  "version": "1.0.0",
+  "description": "A portfolio starter of Abell. This is the project that is created when you run `npx create-abell-app &lt;project-name>`",
+  "main": "abell.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "abell serve",
+    "build": "abell build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abelljs/abell-starter-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abelljs/abell-starter-portfolio/issues"
+  },
+  "homepage": "https://github.com/abelljs/abell-starter-portfolio#readme",
+  "devDependencies": {
+    "abell": "^0.6.2",
+    "dotenv": "^8.2.0"
+  }
+}

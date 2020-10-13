@@ -1,0 +1,60 @@
+<AbellComponent>
+<template>
+  <nav>
+    <div class="brand-container display-inline-block font-secondary">
+      <a href="" id="brand"><del>Earth B</del></a>
+    </div>
+    <div class="right-items">
+      <a href="#home" class="nav-item">Home</a>
+      <a href="#air-quality" class="nav-item">Check Air Quality</a>
+    </div>
+  </nav>
+</template>
+
+<style>
+  nav {
+    padding: 40px 150px;
+    display: flex;
+    width: 100%;
+    color: #111;
+  }
+
+  .brand-container {
+    flex: 1;
+    padding: 24px 20px;
+  }
+
+  #brand {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #111;
+  }
+ 
+  .right-items {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .nav-item {
+    padding: 30px 20px;
+    font-size: 0.9rem;
+    display: inline-block;
+    color: #888;
+    font-weight: bold;
+    transition: color .3s ease;
+  }
+
+  .nav-item:hover {
+    color: var(--primary);
+    transition: color .3s ease;
+  }
+
+  @media (max-width: 768px) {
+    nav {
+      padding: 0px 10px;
+    }
+  }
+</style>
+</AbellComponent>
