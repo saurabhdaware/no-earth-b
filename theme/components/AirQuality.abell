@@ -120,8 +120,13 @@ table#aqi-table td, table#aqi-table th {
 
 table#aqi-params td, table#aqi-params th {
   padding: 10px 70px 10px 10px;
+  vertical-align: top;
 }
 
+table#aqi-params td:first-child {
+  font-weight: bold;
+  font-size: 1rem;
+}
 
 </style>
 

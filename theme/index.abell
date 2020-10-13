@@ -26,6 +26,10 @@
     <Home props={$root} />
     <AirQuality />
     <About props={importContent} />
+    <section class="container">
+      <h2>Contributing</h2>
+      <p>This website needs contribution that adds more information about climate. If you come from coding background, you can contribute to GitHub Repository at <a href="https://github.com/saurabhdaware/no-earth-b">https://github.com/saurabhdaware/no-earth-b</a>. Else, you can drop me an Email at <a href="mailto:saurabhdaware99@gmail.com">saurabhdaware99@gmail.com</a>.</p>
+    </section>
   </main>
   <Footer/>
 </body>
