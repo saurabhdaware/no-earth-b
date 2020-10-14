@@ -10,23 +10,26 @@
     <h2>Air Quality Index</h2>
     <div class="aqi-card">
       <div class="city-information">
-        <div class="city-name-select">
-          <input type="text" autocomplete="off" />
-          <div class="autocomplete-items">
-            <button class="autocomplete-item">Mumbai</button>
-          </div>
-        </div>
         <div class="city-name">----</div>
+        <form class="city-name-select" onsubmit="return false">
+          <label for="city-name-autocomplete">Select City</label>
+          <input id="city-name-autocomplete" type="text" autocomplete="off" />
+          <div class="autocomplete-items shadow"></div>
+        </form>
         <div class="air-quality-detailed-numbers">
-          <table id="aqi-table">
-          </table>
+          <table id="aqi-table"></table>
         </div>
       </div>
       <div class="air-quality-number">
         <span class="air-quality-value">00</span> AQI
       </div>
     </div>
-    <div><table id="aqi-params"></table></div>
+    <div>
+      <details>
+        <summary>Explanation of AQI Parameters</summary>
+        <table id="aqi-params"></table>
+      </details>
+    </div>
   </section>
 </template>
 
@@ -34,12 +37,30 @@
 const scopedSelector = (selector) => document.querySelector(`#air-quality ${selector}`);
 const paramInfo = {{ JSON.stringify(paramInfo) }}
 
+const debounce = (func, delay) => { 
+  let debounceTimer 
+  return function() {
+    const context = this
+    const args = arguments 
+    clearTimeout(debounceTimer) 
+    debounceTimer = setTimeout(() => func.apply(context, args), delay) 
+  }
+}
+
 async function fetchPollutionParameters(location='here') {
   const apiResponse = await fetch(`https://api.waqi.info/feed/${location}/?token={{ process.env.AQI_TOKEN }}`).then(res => res.json());
+  if (apiResponse.status === 'error') {
+    alert('Data for this city is not found');
+    return;
+  }
+
   return apiResponse.data;
 }
 
 function setAirQualityCard(res) {
+  if (!res) {
+    return;
+  }
   scopedSelector('.city-name').innerHTML = res.city.name;
   scopedSelector('.air-quality-value').innerHTML = res.aqi;
   const tableHeads = Object.keys(res.iaqi)
@@ -54,10 +75,14 @@ function setAirQualityCard(res) {
     
     return `
       <tr>
-        <td>${aqiParameter}</td>
         <td>${
-          aqiParameter in paramInfo 
-          ? paramInfo[aqiParameter] 
+          aqiParameter in paramInfo.paramNames
+          ? `${paramInfo.paramNames[aqiParameter]} (${aqiParameter})`
+          : aqiParameter
+        }</td>
+        <td>${
+          aqiParameter in paramInfo.desc
+          ? paramInfo.desc[aqiParameter] 
           : '- No Info Avaiable -'
         }</td>
       </tr>
@@ -65,14 +90,34 @@ function setAirQualityCard(res) {
   }).join('')
 }
 
+async function setAQICity(city) {
+  const cityName = city.slice(0, city.indexOf(',')).toLowerCase();
+  scopedSelector('input#city-name-autocomplete').value = cityName;
+  const params = await fetchPollutionParameters(cityName)
+  setAirQualityCard(params);
+  scopedSelector('.autocomplete-items').innerHTML = '';
+}
+
+async function setCityAutoComplete(event) {
+  const inputValue = event.target.value;
+  const teleportRes = await fetch(`https://api.teleport.org/api/cities/?search=${inputValue}&limit=5`).then(res => res.json());
+  const cities = teleportRes._embedded["city:search-results"];
+  scopedSelector('.autocomplete-items').innerHTML = cities.map(city => `
+    <button onclick="setAQICity(this.innerText);" class="autocomplete-item">${city.matching_full_name}</button>
+  `).join('');
+}
+
 fetchPollutionParameters().then(setAirQualityCard);
+
+scopedSelector('input#city-name-autocomplete')
+  .addEventListener('keyup', debounce(setCityAutoComplete, 600))
 </script>
 
 
 <style global>
 .aqi-card {
   display: flex;
-  padding: 80px 0px;
+  padding: 80px 0px 20px 0px;
 }
 
 .air-quality-number {
@@ -133,6 +178,33 @@ table#aqi-params td:first-child {
   font-size: 1rem;
 }
 
+.city-name-select {
+  display: inline-block;
+  width: 300px;
+}
+
+
+.city-name-select input {
+  display: block;
+  width: 100%;
+}
+
+.autocomplete-items {
+  border: 1px solid #ddd;
+}
+
+.autocomplete-items .autocomplete-item {
+  display: block;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  background-color: transparent;
+  padding: 5px 10px;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+}
 </style>
 
 </AbellComponent>
