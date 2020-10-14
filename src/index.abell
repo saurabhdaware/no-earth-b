@@ -16,8 +16,7 @@
 
   <link rel="icon" href="{{ $root }}/static-assets/icons/favicon.ico"/>
   <link rel="stylesheet" href="{{ $root }}/static-assets/styles/style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&Roboto&xdisplay=swap" rel="stylesheet"> 
-  
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">   
   <title>No Earth B</title>
 </head>
 <body>

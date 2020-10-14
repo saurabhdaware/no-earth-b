@@ -10,6 +10,12 @@
     <h2>Air Quality Index</h2>
     <div class="aqi-card">
       <div class="city-information">
+        <div class="city-name-select">
+          <input type="text" autocomplete="off" />
+          <div class="autocomplete-items">
+            <button class="autocomplete-item">Mumbai</button>
+          </div>
+        </div>
         <div class="city-name">----</div>
         <div class="air-quality-detailed-numbers">
           <table id="aqi-table">
@@ -20,10 +26,7 @@
         <span class="air-quality-value">00</span> AQI
       </div>
     </div>
-    <div>
-      <table id="aqi-params">
-      </table>
-    </div>
+    <div><table id="aqi-params"></table></div>
   </section>
 </template>
 
@@ -36,7 +39,7 @@ async function fetchPollutionParameters(location='here') {
   return apiResponse.data;
 }
 
-fetchPollutionParameters().then((res) => {
+function setAirQualityCard(res) {
   scopedSelector('.city-name').innerHTML = res.city.name;
   scopedSelector('.air-quality-value').innerHTML = res.aqi;
   const tableHeads = Object.keys(res.iaqi)
@@ -60,7 +63,9 @@ fetchPollutionParameters().then((res) => {
       </tr>
     `
   }).join('')
-});
+}
+
+fetchPollutionParameters().then(setAirQualityCard);
 </script>
 
 

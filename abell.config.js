@@ -1,5 +1,5 @@
 module.exports = {
-  themePath: 'theme',
+  themePath: 'src',
   globalMeta: {
     name: "Saurabh Daware",
     brand: "SD",
