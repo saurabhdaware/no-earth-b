@@ -61,6 +61,7 @@ function setAirQualityCard(res) {
   if (!res) {
     return;
   }
+
   scopedSelector('.city-name').innerHTML = res.city.name;
   scopedSelector('.air-quality-value').innerHTML = res.aqi;
   const tableHeads = Object.keys(res.iaqi)
@@ -181,6 +182,7 @@ table#aqi-params td:first-child {
 .city-name-select {
   display: inline-block;
   width: 300px;
+  position: relative;
 }
 
 
@@ -191,6 +193,8 @@ table#aqi-params td:first-child {
 
 .autocomplete-items {
   border: 1px solid #ddd;
+  position: absolute;
+  background-color: #fff;
 }
 
 .autocomplete-items .autocomplete-item {
