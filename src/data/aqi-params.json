@@ -45,7 +45,7 @@
     },
     "201-300": { 
       "message": "Very Unhealthy", 
-      "color": "#f00", 
+      "color": "#8F3F97", 
       "level": 5 
     },
     "301+": { 

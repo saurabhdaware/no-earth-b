@@ -26,6 +26,7 @@
         </form>
         <div class="air-quality-detailed-numbers">
           <table id="aqi-table"></table>
+          <p class="text-small">All values are in AQI format.</p>
         </div>
       </div>
       <div class="air-quality-number">
@@ -41,6 +42,7 @@
         <summary>Explanation of AQI Parameters</summary>
         <table id="aqi-params"></table>
       </details>
+      <p class="text-medium">Read more about how values are calculated at <a href="https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf">Airnow's AQI Technical Assistance Document</a></p>
     </div>
   </section>
 </template>
