@@ -34,6 +34,14 @@ a {
   padding: 130px 200px;
 }
 
+.row {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 100px 30px;

@@ -21,5 +21,37 @@
     "t": "-- No Info Available --",
     "w": "-- No Info Available --",
     "wg": "-- No Info Available --"
+  },
+  "aqiLevels": {
+    "0-50": { 
+      "message": "Good", 
+      "color": "#0f0", 
+      "level": 1 
+    },
+    "51-100": { 
+      "message": "Moderate", 
+      "color": "#ff0", 
+      "level": 2 
+    },
+    "101-150": { 
+      "message": "Unhealthy for Sensitive Groups", 
+      "color": "#f90", 
+      "level": 3 
+    },
+    "151-200": { 
+      "message": "Unhealthy", 
+      "color": "#f30", 
+      "level": 4 
+    },
+    "201-300": { 
+      "message": "Very Unhealthy", 
+      "color": "#f00", 
+      "level": 5 
+    },
+    "301+": { 
+      "message": "Hazardous (Avoid going outdoors)", 
+      "color": "#900", 
+      "level": 6 
+    }
   }
 }

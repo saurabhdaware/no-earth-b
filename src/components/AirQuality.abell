@@ -11,9 +11,17 @@
     <div class="aqi-card">
       <div class="city-information">
         <div class="city-name">----</div>
+        <div class="change-city-container"><button id="change-city-button">Change City</button></div>
         <form class="city-name-select" onsubmit="return false">
-          <label for="city-name-autocomplete">Select City</label>
-          <input id="city-name-autocomplete" type="text" autocomplete="off" />
+          <div class="row">
+            <div>
+              <label for="city-name-autocomplete">Select City</label>
+              <input id="city-name-autocomplete" type="text" autocomplete="off" />
+            </div>
+            <div class="flex-1">
+              <button class="search-button">Search</button>
+            </div>
+          </div>
           <div class="autocomplete-items shadow"></div>
         </form>
         <div class="air-quality-detailed-numbers">
@@ -22,6 +30,10 @@
       </div>
       <div class="air-quality-number">
         <span class="air-quality-value">00</span> AQI
+        <div>
+          <div class="aqi-bar"><div class="aqi-level"></div></div>
+          <span id="aqi-message">--</span>
+        </div>
       </div>
     </div>
     <div>
@@ -89,6 +101,27 @@ function setAirQualityCard(res) {
       </tr>
     `
   }).join('')
+
+
+  // aqi bar
+  let aqiVal = {};
+  if (res.aqi <= 50) {
+    aqiVal = paramInfo.aqiLevels['0-50'];
+  } else if (res.aqi > 50 && res.aqi <= 100) {
+    aqiVal = paramInfo.aqiLevels['51-100'];
+  } else if (res.aqi > 100 && res.aqi <= 150) {
+    aqiVal = paramInfo.aqiLevels['101-150'];
+  } else if (res.aqi > 150 && res.aqi <= 200) {
+    aqiVal = paramInfo.aqiLevels['151-200'];
+  } else if (res.aqi > 200 && res.aqi <= 300) {
+    aqiVal = paramInfo.aqiLevels['201-300'];
+  } else {
+    aqiVal = paramInfo.aqiLevels['301+'];
+  }
+
+  scopedSelector('.aqi-level').style.width = `calc(100%*${aqiVal.level}/6)`;
+  scopedSelector('.aqi-level').style.backgroundColor = aqiVal.color;
+  scopedSelector('#aqi-message').innerText = aqiVal.message;
 }
 
 async function setAQICity(city) {
@@ -111,7 +144,12 @@ async function setCityAutoComplete(event) {
 fetchPollutionParameters().then(setAirQualityCard);
 
 scopedSelector('input#city-name-autocomplete')
-  .addEventListener('keyup', debounce(setCityAutoComplete, 600))
+  .addEventListener('keyup', debounce(setCityAutoComplete, 500));
+
+scopedSelector('button#change-city-button')
+  .addEventListener('click', e => {
+    scopedSelector('.city-name-select').classList.toggle('show');
+  })
 </script>
 
 
@@ -125,7 +163,23 @@ scopedSelector('input#city-name-autocomplete')
   flex: 1;
   text-align: center;
   font-weight: bold;
+  padding: 40px 0px;
   color: #999;
+}
+
+.aqi-bar {
+  background-color: #eee;
+  width: 100%;
+  margin: 30px 0px;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.aqi-level {
+  background-color: #ff0;
+  width: calc(100%*2/6);
+  height: 100%;
 }
 
 .air-quality-value {
@@ -183,12 +237,35 @@ table#aqi-params td:first-child {
   display: inline-block;
   width: 300px;
   position: relative;
+  font-size: 0.8rem;
+  display: none;
 }
 
+.city-name-select.show {
+  display: block;
+}
 
 .city-name-select input {
   display: block;
   width: 100%;
+  font-size: inherit;
+}
+
+.city-name-select .search-button {
+  margin: 16px 5px 0px 5px;
+  padding: 3px 5px;
+  font-size: inherit;
+}
+
+.change-city-container {
+  padding: 10px 2px;
+}
+
+.change-city-container button#change-city-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #09f;
 }
 
 .autocomplete-items {
@@ -201,6 +278,7 @@ table#aqi-params td:first-child {
   display: block;
   border: 1px solid #ddd;
   border-left: none;
+  font-size: 0.8rem;
   border-right: none;
   border-top: none;
   background-color: transparent;
@@ -209,6 +287,7 @@ table#aqi-params td:first-child {
   cursor: pointer;
   text-align: left;
 }
+
 </style>
 
 </AbellComponent>
