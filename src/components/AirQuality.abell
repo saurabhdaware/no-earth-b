@@ -62,7 +62,13 @@ const debounce = (func, delay) => {
 }
 
 async function fetchPollutionParameters(location='here') {
-  const apiResponse = await fetch(`https://api.waqi.info/feed/${location}/?token={{ process.env.AQI_TOKEN }}`).then(res => res.json());
+  let apiResponse;
+  if (typeof location === 'string') {
+    apiResponse = await fetch(`https://api.waqi.info/feed/${location}/?token={{ process.env.AQI_TOKEN }}`).then(res => res.json());
+  } else {
+    apiResponse = await fetch(`https://api.waqi.info/feed/geo:${location.latitude};${location.longitude}/?token={{ process.env.AQI_TOKEN }}`).then(res => res.json());
+  }
+
   if (apiResponse.status === 'error') {
     alert('Data for this city is not found');
     return;
@@ -126,10 +132,10 @@ function setAirQualityCard(res) {
   scopedSelector('#aqi-message').innerText = aqiVal.message;
 }
 
-async function setAQICity(city) {
-  const cityName = city.slice(0, city.indexOf(',')).toLowerCase();
-  scopedSelector('input#city-name-autocomplete').value = cityName;
-  const params = await fetchPollutionParameters(cityName)
+async function setAQICity(el) {
+  const cityData = await fetch(el.dataset.details).then(res => res.json());
+  scopedSelector('input#city-name-autocomplete').value = el.innerText;
+  const params = await fetchPollutionParameters(cityData.location.latlon);
   setAirQualityCard(params);
   scopedSelector('.autocomplete-items').innerHTML = '';
 }
@@ -139,7 +145,7 @@ async function setCityAutoComplete(event) {
   const teleportRes = await fetch(`https://api.teleport.org/api/cities/?search=${inputValue}&limit=5`).then(res => res.json());
   const cities = teleportRes._embedded["city:search-results"];
   scopedSelector('.autocomplete-items').innerHTML = cities.map(city => `
-    <button onclick="setAQICity(this.innerText);" class="autocomplete-item">${city.matching_full_name}</button>
+    <button data-details="${city._links["city:item"].href}" onclick="setAQICity(this);" class="autocomplete-item">${city.matching_full_name}</button>
   `).join('');
 }
 
