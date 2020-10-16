@@ -158,6 +158,13 @@ scopedSelector('button#change-city-button')
   .addEventListener('click', e => {
     scopedSelector('.city-name-select').classList.toggle('show');
   })
+
+scopedSelector('.search-button').addEventListener('click', e => {
+  let cityName = scopedSelector('input#city-name-autocomplete').value.toLowerCase();
+  cityName = cityName.slice(0, cityName.indexOf(','));
+  fetchPollutionParameters(cityName).then(setAirQualityCard);
+  scopedSelector('.autocomplete-items').innerHTML = '';
+})
 </script>
 
 
