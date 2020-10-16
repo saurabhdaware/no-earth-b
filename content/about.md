@@ -1,5 +1,0 @@
-Till 2030, We have to transform our energy system away from fossil fuels to efficient and sustainable energy.
-
-Failing to hit a 45% reduction target by 2030 will result in increased chances of having 1.5 degree celsius rise in the global temperature by 2100.
-
-[https://insideclimatenews.org/news/27082019/12-years-climate-change-explained-ipcc-science-solutions](https://insideclimatenews.org/news/27082019/12-years-climate-change-explained-ipcc-science-solutions)
