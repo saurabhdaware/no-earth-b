@@ -55,6 +55,10 @@
     nav {
       padding: 0px 10px;
     }
+
+    .nav-item {
+      padding: 30px 10px;
+    }
   }
 </style>
 </AbellComponent>

@@ -27,11 +27,6 @@
 
 <!-- 'inlined' attribute adds CSS to <head> tag of the main page. -->
 <style inlined>
-  #map {
-    height: 400px;  /* The height is 400 pixels */
-    width: 100%;  /* The width is the width of the web page */
-  }
-  
   section#home {
     padding: 0px 0px;
     color: #111;
@@ -73,6 +68,15 @@
 
     section #remaining-days {
       font-size: 1.5rem;
+    }
+
+    section .home-info-container {
+      padding: 80px 40px;
+      flex-direction: column-reverse;
+    }
+
+    section .font-secondary {
+      padding: 25px 0px;
     }
   }
 </style>

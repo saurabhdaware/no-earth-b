@@ -42,7 +42,7 @@
         <summary>Explanation of AQI Parameters</summary>
         <table id="aqi-params"></table>
       </details>
-      <p class="text-medium">Read more about how values are calculated at <a href="https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf">Airnow's AQI Technical Assistance Document</a></p>
+      <p class="text-medium">Read more about how values are calculated at <a target="_blank" href="https://www.airnow.gov/sites/default/files/2020-05/aqi-technical-assistance-document-sept2018.pdf">Airnow's AQI Technical Assistance Document</a></p>
     </div>
   </section>
 </template>
@@ -288,6 +288,16 @@ table#aqi-params td:first-child {
   width: 100%;
   cursor: pointer;
   text-align: left;
+}
+
+@media (max-width: 768px) {
+  .aqi-card {
+    flex-direction: column-reverse;
+  }
+
+  .air-quality-detailed-numbers {
+    overflow-x: auto;
+  }
 }
 
 </style>
