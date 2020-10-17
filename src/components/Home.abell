@@ -45,7 +45,7 @@
   }
 
   section #remaining-days {
-    font-size: 3em;
+    font-size: 3.3em;
     flex: 2;
     margin: 0px 0px;
   }
