@@ -1,7 +1,7 @@
 <AbellComponent>
 <template>
   <footer>
-    &#169; <a href="https://saurabhdaware.in">saurabhdaware.in</a> <span id="footer-year"></span>
+    &#169; Built with <a href="https://abelljs.org">Abell</a> by <a href="https://saurabhdaware.in">saurabhdaware</a> <span id="footer-year"></span>
   </footer>
 </template>
 <style>
