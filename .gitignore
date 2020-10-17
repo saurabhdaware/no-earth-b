@@ -106,3 +106,5 @@ dist
 # Abell files
 .debug/
 dist/
+
+# Ignore package-lock.json since we use yarn
