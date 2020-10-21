@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/abelljs/abell-starter-portfolio#readme",
   "devDependencies": {
-    "abell": "^0.6.2",
+    "abell": "^0.7.0",
     "dotenv": "^8.2.0"
   }
 }

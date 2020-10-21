@@ -169,6 +169,40 @@ scopedSelector('.search-button').addEventListener('click', e => {
 
 
 <style global>
+#aqi-table,
+#aqi-params {
+  padding: 10px;
+}
+
+table#aqi-table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+table#aqi-params {
+  font-size: 0.9rem;
+}
+
+table#aqi-table, table#aqi-table td, table#aqi-table th {
+  border: 1px solid #ddd;
+}
+
+table#aqi-table td, table#aqi-table th {
+  padding: 10px;
+}
+
+table#aqi-params td, table#aqi-params th {
+  padding: 10px 70px 10px 10px;
+  vertical-align: top;
+}
+
+table#aqi-params td:first-child {
+  font-weight: bold;
+  font-size: 1rem;
+}
+</style>
+
+<style>
 .aqi-card {
   display: flex;
   padding: 80px 0px 20px 0px;
@@ -214,38 +248,6 @@ scopedSelector('.search-button').addEventListener('click', e => {
 .city-name {
   font-size: 2.3rem;
   color: #333;
-}
-
-#aqi-table,
-#aqi-params {
-  padding: 10px;
-}
-
-table#aqi-table {
-  border-collapse: collapse;
-  font-size: 0.8rem;
-}
-
-table#aqi-params {
-  font-size: 0.9rem;
-}
-
-table#aqi-table, table#aqi-table td, table#aqi-table th {
-  border: 1px solid #ddd;
-}
-
-table#aqi-table td, table#aqi-table th {
-  padding: 10px;
-}
-
-table#aqi-params td, table#aqi-params th {
-  padding: 10px 70px 10px 10px;
-  vertical-align: top;
-}
-
-table#aqi-params td:first-child {
-  font-weight: bold;
-  font-size: 1rem;
 }
 
 .city-name-select {
