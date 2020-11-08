@@ -48,7 +48,7 @@
 </template>
 
 <script>
-const scopedSelector = (selector) => document.querySelector(`#air-quality ${selector}`);
+// Assign value to client-side variable from Node-side variable.
 const paramInfo = {{ JSON.stringify(paramInfo) }}
 
 const debounce = (func, delay) => { 
@@ -133,6 +133,7 @@ function setAirQualityCard(res) {
 }
 
 async function setAQICity(el) {
+  console.log(el.dataset.details);
   const cityData = await fetch(el.dataset.details).then(res => res.json());
   scopedSelector('input#city-name-autocomplete').value = el.innerText;
   const params = await fetchPollutionParameters(cityData.location.latlon);
@@ -140,12 +141,19 @@ async function setAQICity(el) {
   scopedSelector('.autocomplete-items').innerHTML = '';
 }
 
+
 async function setCityAutoComplete(event) {
   const inputValue = event.target.value;
   const teleportRes = await fetch(`https://api.teleport.org/api/cities/?search=${inputValue}&limit=5`).then(res => res.json());
   const cities = teleportRes._embedded["city:search-results"];
-  scopedSelector('.autocomplete-items').innerHTML = cities.map(city => `
-    <button data-details="${city._links["city:item"].href}" onclick="setAQICity(this);" class="autocomplete-item">${city.matching_full_name}</button>
+  scopedSelector('.autocomplete-items').innerHTML = cities.map((city, index) => `
+    <button 
+      data-details="${city._links["city:item"].href}" 
+      onclick="setAQICity(this)"
+      class="autocomplete-item autocomplete-${index}"
+    >
+      ${city.matching_full_name}
+    </button>
   `).join('');
 }
 
@@ -199,6 +207,26 @@ table#aqi-params td, table#aqi-params th {
 table#aqi-params td:first-child {
   font-weight: bold;
   font-size: 1rem;
+}
+
+.autocomplete-items {
+  border: 1px solid #ddd;
+  position: absolute;
+  background-color: #fff;
+}
+
+.autocomplete-items .autocomplete-item {
+  display: block;
+  border: 1px solid #ddd;
+  border-left: none;
+  font-size: 0.8rem;
+  border-right: none;
+  border-top: none;
+  background-color: transparent;
+  padding: 5px 10px;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
 }
 </style>
 
@@ -272,6 +300,7 @@ table#aqi-params td:first-child {
   margin: 16px 5px 0px 5px;
   padding: 3px 5px;
   font-size: inherit;
+  cursor: pointer;
 }
 
 .change-city-container {
@@ -283,26 +312,6 @@ table#aqi-params td:first-child {
   background: transparent;
   cursor: pointer;
   color: #09f;
-}
-
-.autocomplete-items {
-  border: 1px solid #ddd;
-  position: absolute;
-  background-color: #fff;
-}
-
-.autocomplete-items .autocomplete-item {
-  display: block;
-  border: 1px solid #ddd;
-  border-left: none;
-  font-size: 0.8rem;
-  border-right: none;
-  border-top: none;
-  background-color: transparent;
-  padding: 5px 10px;
-  width: 100%;
-  cursor: pointer;
-  text-align: left;
 }
 
 @media (max-width: 768px) {
